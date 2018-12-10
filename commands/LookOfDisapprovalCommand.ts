@@ -12,15 +12,17 @@ export class LookOfDisapprovalCommand implements ISlashCommand {
         const username = await read.getEnvironmentReader().getSettings().getValueById('lookofdisapproval_name');
 
         let response = 'ಠ_ಠ';
-        let successful = true;
 
         if (context.getArguments().length >= 1) {
           const usernames = context.getArguments();
           usernames.forEach(username => {
-            if (username.charAt(0) === '@') {
-              response += ' ' + username;
-            } else {
-              response += ' @' + username;
+            // Check if not just whitespace
+            if (/\S/.test(username)) {
+              if (username.charAt(0) === '@') {
+                response += ' ' + username;
+              } else {
+                response += ' @' + username;
+              }
             }
           });
         }
